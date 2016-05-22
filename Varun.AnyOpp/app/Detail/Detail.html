@@ -1,0 +1,24 @@
+﻿<h4 ng-if="!user.token">Logging In</h4>
+<fieldset ng-if="!!user.token">
+    <h4>Logged In</h4>
+    {{asyncSelected.geometry.location}}
+    <input type="text" typeahead-on-select="onSelect($item, $model, $label)" ng-model="asyncSelected" placeholder="Locations loaded via $http" uib-typeahead="address as address.formatted_address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+    <div ng-show="noResults">
+        <i class="glyphicon glyphicon-remove"></i> No Results Found
+    </div>
+    <div ng-if="!!map">
+        <br>
+        <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+    </div>
+    <br>
+    <button class="btn btn-default" ngf-select="upload($file)">Upload on file select</button>
+    <div ngf-drop="uploadFiles($files)" class="drop-box"
+         ngf-drag-over-class="'dragover'" ngf-multiple="false"
+         ngf-pattern="'image/*,application/pdf'">Drop file here</div>
+    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+    <br>
+    <label ng-if="uploading">Uploading...</label>
+    <label class="success" ng-if="!!result">{{result}}</label>
+    <label class="error" ng-if="!!error">{{error.message}}</label>
+</fieldset>
